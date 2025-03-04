@@ -1,6 +1,4 @@
-from tkinter import Tk, BOTH, Canvas
-from src.window import Window
-from src.line import Point, Line
+from src.graphics import Window, Point, Line
 
 def main():
     win = Window(800, 600)
