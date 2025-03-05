@@ -1,13 +1,17 @@
-from src.graphics import Window, Point, Line
+from src.graphics import Window
+from src.cell import Cell
 
 def main():
     win = Window(800, 600)
 
-    point_a = Point(150, 150)
-    point_b = Point(400, 150)
+    c = Cell(win)
+    c.draw(50, 50, 100, 100)
 
-    line_a = Line(point_a,point_b)
-    win.draw_line(line_a, fill_color="black")
+    c2 = Cell(win)
+    c2.draw(100, 50, 150, 100)
+
+    c.draw_move(c2)
+
 
     win.wait_for_close()
 
