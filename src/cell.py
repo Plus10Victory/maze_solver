@@ -13,6 +13,8 @@ class Cell:
         self._win = win
 
     def draw(self, x1, y1, x2, y2):
+        if self._win is None:
+            return
         self._x1 = x1
         self._x2 = x2
         self._y1 = y1
@@ -31,11 +33,10 @@ class Cell:
             self._win.draw_line(line)
 
     def draw_move(self, to_cell, undo=False):
+        fill_color = "red"
         if undo:
-            line_color = "gray"
-        else:
-            line_color = "red"
-        start_point = Point((self._x1 + self._x2)/2, (self._y1 + self._y2)/2)
+            fill_color = "gray"
+        start_point = Point((self._x1 + self._x2) // 2, (self._y1 + self._y2)/2)
         end_point = Point((to_cell._x2 + to_cell._x1)/2, (to_cell._y2 + to_cell._y1)/2)
         move_line = Line(start_point, end_point)
-        self._win.draw_line(move_line, fill_color=line_color)
+        self._win.draw_line(move_line, fill_color=fill_color)
