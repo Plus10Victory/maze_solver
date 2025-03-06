@@ -14,6 +14,7 @@ class Cell:
 
     def draw(self, x1, y1, x2, y2):
         if self._win is None:
+            print("drawing failed")
             return
         self._x1 = x1
         self._x2 = x2
