@@ -3,18 +3,17 @@ from src.cell import Cell
 from src.maze import Maze
 
 def main():
-    win = Window(800, 600)
 
-    #c = Cell(win)
-    #c.draw(50, 50, 100, 100)
+    num_rows = 12
+    num_cols = 16
+    margin = 50
+    screen_x = 800
+    screen_y = 600
+    cell_size_x = (screen_x - 2 * margin) / num_cols
+    cell_size_y = (screen_y - 2 * margin) / num_rows
+    win = Window(screen_x, screen_y)
 
-    #c2 = Cell(win)
-    #c2.draw(100, 50, 150, 100)
-
-    #c.draw_move(c2)
-
-    maze = Maze(50,50,4,4,50,50,win)
-
+    maze = Maze(margin, margin, num_rows, num_cols, cell_size_x, cell_size_y, win)
 
     win.wait_for_close()
     

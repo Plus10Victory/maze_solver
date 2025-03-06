@@ -40,10 +40,10 @@ class Maze:
     def _draw_cell(self, i, j):
         if self._win is None:
             return
-        x1 = self._x1 + self._cell_size_x * j
-        x2 = self._x1 + (j + 1) * self._cell_size_x
-        y1 = self._y1 + i * self._cell_size_y
-        y2 = self._y1 + (i + 1) * self._cell_size_y
+        x1 = self._x1 + self._cell_size_x * i
+        x2 = self._x1 + (i + 1) * self._cell_size_x
+        y1 = self._y1 + j * self._cell_size_y
+        y2 = self._y1 + (j + 1) * self._cell_size_y
         print(f"cell in postion x1: {x1}, y1: {y1}, x2: {x2}, y2: {y2}")
         self._cells[i][j].draw(x1, y1, x2, y2)
         self._animate()
