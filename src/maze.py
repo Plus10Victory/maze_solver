@@ -146,49 +146,101 @@ class Maze:
         if i == self._num_cols - 1 and j == self._num_rows - 1:
             return True
         
-        while True:
-            next_to_visit = []
-            if i != 0:
-                if self._cells[i][j].has_left_wall == False and self._cells[i-1][j].visited == False:
-                    next_to_visit.append("left")
-            if j != 0:
-                if self._cells[i][j].has_top_wall == False and self._cells[i][j-1].visited == False:
-                    next_to_visit.append("up")
-            if i < self._num_cols -1:
-                if self._cells[i][j].has_right_wall == False and self._cells[i+1][j].visited == False:
-                    next_to_visit.append("right")
-            if j < self._num_rows -1:
-                if self._cells[i][j].has_bottom_wall == False and self._cells[i][j+1].visited == False:
-                    next_to_visit.append("down")
+        # solve left
+        if (
+            i > 0 and
+            not self._cells[i][j].has_left_wall and
+            not self._cells[i-1][j].visited
+        ):
+            self._cells[i][j].draw_move(self._cells[i-1][j])
+            if self._solve_r(i-1, j):
+                return True
+            else:
+                self._cells[i-1][j].draw_move(self._cells[i][j], undo=True)
 
-            if len(next_to_visit) == 0:
-                return False
+        # solve up
+        if (
+            j > 0 and
+            not self._cells[i][j].has_top_wall and
+            not self._cells[i][j-1].visited
+        ):
+            self._cells[i][j].draw_move(self._cells[i][j-1])
+            if self._solve_r(i, j-1):
+                return True
+            else:
+                self._cells[i][j-1].draw_move(self._cells[i][j], undo=True)
+
+        # solve right
+        if (
+            i < self._num_cols - 1 and
+            not self._cells[i][j].has_right_wall and
+            not self._cells[i+1][j].visited
+        ):
+            self._cells[i][j].draw_move(self._cells[i+1][j])
+            if self._solve_r(i+1, j):
+                return True
+            else:
+                self._cells[i+1][j].draw_move(self._cells[i][j], undo=True)
+
+        # solve down
+        if (
+            j < self._num_rows -1 and
+            not self._cells[i][j].has_bottom_wall and
+            not self._cells[i][j+1].visited
+        ):
+            self._cells[i][j].draw_move(self._cells[i][j+1])
+            if self._solve_r(i, j+1):
+                return True
+            else:
+                self._cells[i][j+1].draw_move(self._cells[i][j], undo=True)
+
+        return False
+
+
+        # old code, made a random solve algorithm
+        # while True:
+        #    next_to_visit = []
+        #    if i != 0:
+        #        if self._cells[i][j].has_left_wall == False and self._cells[i-1][j].visited == False:
+        #            next_to_visit.append("left")
+        #    if j != 0:
+        #        if self._cells[i][j].has_top_wall == False and self._cells[i][j-1].visited == False:
+        #            next_to_visit.append("up")
+        #    if i < self._num_cols -1:
+        #        if self._cells[i][j].has_right_wall == False and self._cells[i+1][j].visited == False:
+        #            next_to_visit.append("right")
+        #    if j < self._num_rows -1:
+        #        if self._cells[i][j].has_bottom_wall == False and self._cells[i][j+1].visited == False:
+        #            next_to_visit.append("down")
+
+        #    if len(next_to_visit) == 0:
+        #        return False
             
-            next = next_to_visit[random.randrange(0, len(next_to_visit))]
-            next_to_visit.remove(next)
+        #    next = next_to_visit[random.randrange(0, len(next_to_visit))]
+        #    next_to_visit.remove(next)
 
-            if next is "left":
-                self._cells[i][j].draw_move(self._cells[i-1][j])
-                if self._solve_r(i-1, j) == True:
-                    return True
-                else:
-                    self._cells[i][j].draw_move(self._cells[i-1][j], undo=True)
-            if next is "up":
-                self._cells[i][j].draw_move(self._cells[i][j-1])
-                if self._solve_r(i, j-1) == True:
-                    return True
-                else:
-                    self._cells[i][j].draw_move(self._cells[i][j-1], undo=True)
-            if next is "right":
-                self._cells[i][j].draw_move(self._cells[i+1][j])
-                if self._solve_r(i+1, j) == True:
-                    return True
-                else:
-                    self._cells[i][j].draw_move(self._cells[i+1][j], undo=True)
-            if next is "down":
-                self._cells[i][j].draw_move(self._cells[i][j+1])
-                if self._solve_r(i, j+1) == True:
-                    return True
-                else:
-                    self._cells[i][j].draw_move(self._cells[i][j+1], undo=True)
+        #    if next is "left":
+        #        self._cells[i][j].draw_move(self._cells[i-1][j])
+        #        if self._solve_r(i-1, j) == True:
+        #            return True
+        #        else:
+        #            self._cells[i][j].draw_move(self._cells[i-1][j], undo=True)
+        #    if next is "up":
+        #        self._cells[i][j].draw_move(self._cells[i][j-1])
+        #        if self._solve_r(i, j-1) == True:
+        #            return True
+        #        else:
+        #            self._cells[i][j].draw_move(self._cells[i][j-1], undo=True)
+        #    if next is "right":
+        #        self._cells[i][j].draw_move(self._cells[i+1][j])
+        #        if self._solve_r(i+1, j) == True:
+        #            return True
+        #        else:
+        #            self._cells[i][j].draw_move(self._cells[i+1][j], undo=True)
+        #    if next is "down":
+        #        self._cells[i][j].draw_move(self._cells[i][j+1])
+        #        if self._solve_r(i, j+1) == True:
+        #            return True
+        #        else:
+        #            self._cells[i][j].draw_move(self._cells[i][j+1], undo=True)
             
