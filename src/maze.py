@@ -58,11 +58,11 @@ class Maze:
         self._animate()
 
 
-    def _animate(self):
+    def _animate(self, delay=0.05):
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(0.05)
+        time.sleep(delay)
 
 
     def _break_entrance_and_exit(self):
@@ -157,6 +157,7 @@ class Maze:
                 return True
             else:
                 self._cells[i-1][j].draw_move(self._cells[i][j], undo=True)
+                self._animate(0.1)
 
         # solve up
         if (
@@ -169,6 +170,7 @@ class Maze:
                 return True
             else:
                 self._cells[i][j-1].draw_move(self._cells[i][j], undo=True)
+                self._animate(0.1)
 
         # solve right
         if (
@@ -181,6 +183,7 @@ class Maze:
                 return True
             else:
                 self._cells[i+1][j].draw_move(self._cells[i][j], undo=True)
+                self._animate(0.1)
 
         # solve down
         if (
@@ -193,6 +196,7 @@ class Maze:
                 return True
             else:
                 self._cells[i][j+1].draw_move(self._cells[i][j], undo=True)
+                self._animate(0.1)
 
         return False
 
